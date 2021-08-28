@@ -8,6 +8,9 @@ import {
     View
 } from 'react-native'
 import { images } from './constant/images'
+import { sounds } from './constant/sounds';
+import SoundPlayer from 'react-native-sound-player'
+
 
 export const SwitchScreen = () => {
 
@@ -29,6 +32,17 @@ export const SwitchScreen = () => {
             }
         ).start();
         setSwitchValue(value)
+        playSound(value)
+    }
+
+    const playSound = (value) => {
+        try {
+            // play the file tone.mp3
+            SoundPlayer.playSoundFile(value ? sounds.soundNight : sounds.soundDay, 'mp3')
+            // or play from url
+        } catch (e) {
+            console.log(`cannot play the sound file`, e)
+        }
     }
 
     return (
@@ -58,13 +72,11 @@ export const SwitchScreen = () => {
                     position: 'absolute',
                     zIndex: 1,
                 }}
-                    resizeMode={'repeat'}
                     source={images.icNight} />
                 <Animated.Image style={{
                     height: '100%',
                     width: '100%',
                 }}
-                    resizeMode={'repeat'}
                     source={images.icDay} />
                 <Animated.Image
                     style={{
